@@ -1,0 +1,74 @@
+undefined8 main(void)
+
+{
+  int res;
+  size_t file_content;
+  long n;
+  undefined8 *ptr;
+  undefined8 buffer2 [14];
+  undefined8 read_buffer [6];
+  undefined8 buffer1 [12];
+  int nbr;
+  FILE *file;
+  
+  ptr = buffer1;
+  for (n = 0xc; n != 0; n = n + -1) {
+    *ptr = 0;
+    ptr = ptr + 1;
+  }
+  *(undefined4 *)ptr = 0;
+  ptr = read_buffer;
+  for (n = 5; n != 0; n = n + -1) {
+    *ptr = 0;
+    ptr = ptr + 1;
+  }
+  *(undefined *)ptr = 0;
+  ptr = buffer2;
+  for (n = 0xc; n != 0; n = n + -1) {
+    *ptr = 0;
+    ptr = ptr + 1;
+  }
+  *(undefined4 *)ptr = 0;
+  file = (FILE *)0;
+  nbr = 0;
+  file = fopen("/home/users/level03/.pass","r");
+  if (file == (FILE *)0) {
+    fwrite("ERROR: failed to open password file\n",1,0x24,stderr);
+                    /* WARNING: Subroutine does not return */
+    exit(1);
+  }
+  file_content = fread(read_buffer,1,41,file);
+  nbr = (int)file_content;
+  file_content = strcspn((char *)read_buffer,"\n");
+  *(undefined *)((long)read_buffer + file_content) = 0;
+  if (nbr != 41) {
+    fwrite("ERROR: failed to read password file\n",1,0x24,stderr);
+    fwrite("ERROR: failed to read password file\n",1,0x24,stderr);
+                    /* WARNING: Subroutine does not return */
+    exit(1);
+  }
+  fclose(file);
+  puts("===== [ Secure Access System v1.0 ] =====");
+  puts("/***************************************\\");
+  puts("| You must login to access this system. |");
+  puts("\\**************************************/");
+  printf("--[ Username: ");
+  fgets((char *)buffer1,100,stdin);
+  file_content = strcspn((char *)buffer1,"\n");
+  *(undefined *)((long)buffer1 + file_content) = 0;
+  printf("--[ Password: ");
+  fgets((char *)buffer2,100,stdin);
+  file_content = strcspn((char *)buffer2,"\n");
+  *(undefined *)((long)buffer2 + file_content) = 0;
+  puts("*****************************************");
+  res = strncmp((char *)read_buffer,(char *)buffer2,41);
+  if (res == 0) {
+    printf("Greetings, %s!\n",(char *)buffer1);
+    system("/bin/sh");
+    return 0;
+  }
+  printf((char *)buffer1);
+  puts(" does not have access!");
+                    /* WARNING: Subroutine does not return */
+  exit(1);
+}
