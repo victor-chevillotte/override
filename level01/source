@@ -1,50 +1,12 @@
 int verify_user_name(void)
 {
-  int i;
-  char *pbVar1;
-  char *pbVar2;
-  undefined uVar1;
-  undefined uVar2;
-  char c;
-  
-  c = '\0';
-  uVar1 = &stack0xfffffff4 < (undefined *)16;
-  uVar2 = &stack0x00000000 == (undefined *)28;
   puts("verifying username....\n");
-  i = 7;
-  pbVar1 = &a_user_name;
-  pbVar2 = "dat_wil";
-  do {
-    if (i == 0) break;
-    i = i + -1;
-    pbVar2 = pbVar2 + (uint)(byte)c * -2 + 1;
-    pbVar1 = pbVar1 + (uint)(byte)c * -2 + 1;
-    uVar1 = (byte)*pbVar1 < (byte)*pbVar2;
-    uVar2 = *pbVar1 == *pbVar2;
-    pbVar1 = pbVar1;
-    pbVar2 = pbVar2;
-  } while ((bool)uVar2);
-  return (int)(char)((!(bool)uVar1 && !(bool)uVar2) - uVar1);
+  return strncmp(&a_user_name,"dat_will",7);
 }
 
 int verify_user_pass(char *s)
 {
-  int i;
-  char *str;
-  undefined in_CF;
-  undefined in_ZF;
-  
-  i = 5;
-  str = "admin";
-  do {
-    if (i == 0) break;
-    i = i + -1;
-    in_CF = (byte)*s < (byte)*str;
-    in_ZF = *s == *str;
-    s = (char *)((byte *)s + 1);
-    str = str + 1;
-  } while ((bool)in_ZF);
-  return (int)(char)((!(bool)in_CF && !(bool)in_ZF) - in_CF);
+  return strncmp(s,"admin",5);
 }
 
 int main(void)
