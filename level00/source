@@ -1,0 +1,18 @@
+bool main(void)
+{
+  int nbr [4];
+
+  puts("***********************************");
+  puts("* \t     -Level00 -\t\t  *");
+  puts("***********************************");
+  printf("Password:");
+  __isoc99_scanf(&DAT_08048636,nbr);
+  if (nbr[0] != 5276) {
+    puts("\nInvalid Password!");
+  }
+  else {
+    puts("\nAuthenticated!");
+    system("/bin/sh");
+  }
+  return nbr[0] != 5276;
+}
