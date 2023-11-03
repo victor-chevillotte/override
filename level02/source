@@ -1,5 +1,4 @@
 undefined8 main(void)
-
 {
   int res;
   size_t file_content;
