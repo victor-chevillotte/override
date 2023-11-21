@@ -1,3 +1,11 @@
+### step 1: Decompile with Ghidra
+
+We get the c source code of the program  
+
+### step 2: Code analysis
+
+TODO
+
 Enter Username: dat_will
 
 ( python -c 'print("dat_will")' ; python -c 'print("A" * 79)') | ./level01
