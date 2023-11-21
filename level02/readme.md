@@ -51,6 +51,9 @@ ffffe4f0 = \xf0\xe4\xff\xff
 0x7fffffffe5d0
 printf ("\x22\x0d\x40\x00_%08x.%08x.%08x.%08x.%08x|%s|")
 
+Main variables stack starting Address : 0x7fffffffe5a0
+
+Try `printf ("\x88\xe6\xff\xff_%08x.%08x.%08x.%08x.%08x|%s|")` with these stack addresses to print the content of `read_buffer` ?
 
 ### Finding the adress of `file_content`
 
