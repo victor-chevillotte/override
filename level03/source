@@ -1,4 +1,173 @@
+void prog_timeout(void)
 
+{
+  code *pcVar1;
+  
+  pcVar1 = (code *)swi(0x80);
+  (*pcVar1)();
+  return;
+}
+
+
+undefined4 get_unum(void)
+
+{
+  undefined4 local_10 [3];
+  
+  local_10[0] = 0;
+  fflush(stdout);
+  __isoc99_scanf(&DAT_080489c0,local_10);
+  clear_stdin();
+  return local_10[0];
+}
+
+
+void clear_stdin(void)
+
+{
+  int iVar1;
+  
+  do {
+    iVar1 = getchar();
+    if ((char)iVar1 == '\n') {
+      return;
+    }
+  } while ((char)iVar1 != -1);
+  return;
+}
+
+
+/* WARNING: Removing unreachable block (ram,0x08048698) */
+
+int decrypt(EVP_PKEY_CTX *ctx,uchar *out,size_t *outlen,uchar *in,size_t inlen)
+
+{
+  uint u_nbr;
+  int i;
+  int *ptr1;
+  int *ptr2;
+  char *str;
+  int in_GS_OFFSET;
+  bool bVar1;
+  bool bVar2;
+  uint local_2c;
+  int j;
+  undefined4 local_1d;
+  undefined4 local_19;
+  undefined4 local_15;
+  undefined local_11;
+  int k;
+  char c;
+  
+  k = *(int *)(in_GS_OFFSET + 0x14);
+  j = 1971092817;
+  local_1d = 1734767456;
+  local_19 = 2070311806;
+  local_15 = 862026877;
+  local_11 = 0;
+  u_nbr = 0xffffffff;
+  ptr2 = &j;
+  do {
+    if (u_nbr == 0) break;
+    u_nbr = u_nbr - 1;
+    c = *(char *)ptr2;
+    ptr2 = (int *)((int)ptr2 + 1);
+  } while (c != '\0');
+  local_2c = 0;
+  while( true ) {
+    bVar1 = local_2c < ~u_nbr - 1;
+    bVar2 = local_2c == ~u_nbr - 1;
+    if (!bVar1) break;
+    *(byte *)((int)&j + local_2c) = (byte)ctx ^ *(byte *)((int)&j + local_2c);
+    local_2c = local_2c + 1;
+  }
+  i = 17;
+  ptr1 = &j;
+  str = "Congratulations!";
+  do {
+    if (i == 0) break;
+    i = i + -1;
+    bVar1 = *(byte *)ptr1 < (byte)*str;
+    bVar2 = *(char *)ptr1 == *str;
+    ptr1 = (int *)((int)ptr1 + 1);
+    str = str + 1;
+  } while (bVar2);
+  if ((!bVar1 && !bVar2) == bVar1) {
+    i = system("/bin/sh");
+  }
+  else {
+    i = puts("\nInvalid Password");
+  }
+  if (k == *(int *)(in_GS_OFFSET + 0x14)) {
+    return i;
+  }
+                    /* WARNING: Subroutine does not return */
+  __stack_chk_fail();
+}
+
+
+void test(int param_1,int param_2)
+
+{
+  EVP_PKEY_CTX *struct;
+  uchar *in_stack_ffffffd8;
+  size_t *in_stack_ffffffdc;
+  uchar *in_stack_ffffffe0;
+  size_t in_stack_ffffffe4;
+  
+  struct = (EVP_PKEY_CTX *)(param_2 - param_1);
+  switch(struct) {
+  default:
+    struct = (EVP_PKEY_CTX *)rand();
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x1:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x2:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x3:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x4:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x5:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x6:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x7:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x8:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x9:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x10:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x11:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x12:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x13:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x14:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+    break;
+  case (EVP_PKEY_CTX *)0x15:
+    decrypt(struct,in_stack_ffffffd8,in_stack_ffffffdc,in_stack_ffffffe0,in_stack_ffffffe4);
+  }
+  return;
+}
 
 
 int main(void)
