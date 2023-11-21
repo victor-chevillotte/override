@@ -1,40 +1,36 @@
-void    decrypt(int nb)
+void decrypt(nb)
 {
-    int     index;
-    long    len;
-    char    *str;
-    
-    char *str = (char *)(int [4]){ 1971092817, 1734767456, 2070311806, 862026877 };
+	char *crypt = "Q}|u`sfg~sf{}|a3";
+	size_t len;
+	size_t i;
+	
+	len = strlen(crypt);
+	i = 0;
+	
+	while (i < len) {
+		crypt[i] = crypt[i] ^ nb;
+		i++;
+	}
+	
+	if (strncmp(crypt, "Congratulations", 17) == 0) {
+    	system("/bin/sh");
+	}
+	else {
+		puts("\nInvalid Password");
+	}
 
-    len = strlen((char *)str);
-    while (0 < len) {
-        str += index;
-        str += index;
-        index += 1;
-    }
-
-    if (strncmp("Congratulations", str, 17) == 0)
-        system("/bin/sh");
-    else
-        puts("\nInvalid Password");
-
-    return ;
+	return ;
 }
+
 
 void     test(int nbr, int constant)
 {
     unsigned long nb = constant - nbr;
 
-    if (nb <= 21)
-    {
-        nb = nb << 2;
-        nb += 134515184;
-        nb = *(nb);
-        void (*nb)();
-        return 0;
-    }
-
-    decrypt(rand());
+	if (nb > 21) {
+		decrypt(rand());
+	}
+	decrypt(nb);
 }
 
 

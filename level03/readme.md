@@ -5,18 +5,17 @@ We get the c source code of the program
 ### step 2: Code analysis
 
 - The main function takes a number as an input with scanf then calls the test function
-- The test function compares the input value and then calls a decrypt function
-- The decrypt function compares a string and launch a shell conditionnaly 
-- The decrypt function does not seems to be interesting even if it can launch a shell because it does not take any input of the user.
-- if `nb <= 21` it seems to execute something. We will try different values as an input and try to brutforce.
-
+- The test function compares the input value and then calls a decrypt function 
+- test() calls decrypt: with the result if it's less than 21, else with a random number.
+- The function decrypt() then passes a crypt over the parameter.
+- If the initial user-inputted password is correct, decrypt() prints "Congratulations!" and calls system("/bin/sh").
 
 ### step 3: Test with one number
 
 To do a test with a number, it should be inputted into the executable, accompanied by a shell command. The command to be used is:
 
 ```
-( echo NUMBER ; sleep .1 ; echo 'cat /home/users/level04/.pass' ) | ./level03
+( echo 10 ; sleep .1 ; echo 'cat /home/users/level04/.pass' ) | ./level03
 ```
 
 The purpose of the `sleep` command here is to provide enough time for the execution of the `system()` command.
