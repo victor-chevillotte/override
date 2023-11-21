@@ -55,7 +55,7 @@ So the range of password is 322424824 to 322424845
 We can iterate through the range of numbers found before with a loop. We wrap our command in a `bash for` :
 
 ```
-for i in {322424824..322424845} ; do ( echo $i ; sleep .1 ; echo 'cat /home/users/level04/.pass' ) | ./level03 ; done
+for i in {322424824..322424845} ; do echo $i ; ( echo $i ; sleep .1 ; echo 'cat /home/users/level04/.pass'; ) | ./level03 ; done
 ```
 
 And in the output we get the flag :
@@ -64,12 +64,16 @@ And in the output we get the flag :
 *               level03         **
 ***********************************
 kgv3tkEb9h2mLkRsPkXRfc2mHbjMxQzvb2FrgKkf
-Password:***********************************
+Password:322424828
+***********************************
 *               level03         **
 ***********************************
 Password:
 Invalid Password
+322424829
 ***********************************
 *               level03         **
 ***********************************
 ```
+
+The correct input number is 322424827 !
