@@ -1,0 +1,18 @@
+
+
+
+int main(void)
+{
+  uint timestamp;
+  int nbr;
+  
+  timestamp = time((time_t *)0x0);
+  srand(timestamp);
+  puts("***********************************");
+  puts("*\t\tlevel03\t\t**");
+  puts("***********************************");
+  printf("Password:");
+  __isoc99_scanf();
+  test(nbr,322424845);
+  return 0;
+}
