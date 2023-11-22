@@ -76,21 +76,22 @@ On divise par 4 car index d'int donc 4 bytes
 ### Set sellcode to eip+8
 
 0xf7f897ec => 4160264172
+
 insruction : store
 number : 4160264172
-index : 116 (eip + 2 *4)
+index : 116 (eip + 2 * 4)
 
 ### Set system address to eip
 
 0xf7e6aed0 => 4159090384
+
 insruction : store
-number : 4160264172
+number : 4159090384
 index : 114
 
 problème : 114 est divisible par 3
-
+(UINTMAX + 1) + 456 = 456
 (4294967295 + 1 + 456) / 4 = 1073741938
-
 
 
 
