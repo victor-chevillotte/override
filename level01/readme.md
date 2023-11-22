@@ -1,6 +1,12 @@
 ### step 1: Decompile with Ghidra
 
-We get the c source code of the program  
+- We get the c source code of the program
+- The binary is in 32-bits
+
+```
+file level01
+level01: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=46d63f92a3bb0a950cf71dd3a5a630ade86057ab, not stripped
+```
 
 ### step 2: Code analysis
 
