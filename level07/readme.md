@@ -2,7 +2,7 @@ index overflow
 pas d'utilisation possible de l'env car clear au début du code !!
 
 
-### Find occurance of /bin/sh
+### Find occurence of /bin/sh
 
 (gdb) break main
 Breakpoint 1 at 0x8048729
@@ -38,15 +38,45 @@ Stack level 0, frame at 0xffffd710:
 (gdb) 
 
 => eip address 0xffffd70c de la fonction main
-
+0x8048741
 ### Find address of tab[100]
 
+address is 0xffffcd24
+
+```
+gdb
+start 
+disas main 
+
+   0x080488df <+444>:   test   %eax,%eax
+   0x080488e1 <+446>:   jne    0x80488f8 <main+469>
+   0x080488e3 <+448>:   lea    0x24(%esp),%eax
+   0x080488e7 <+452>:   mov    %eax,(%esp)
+   0x080488ea <+455>:   call   0x8048630 <store_number>
+   0x080488ef <+460>:   mov    %eax,0x1b4(%esp)
+   0x080488f6 <+467>:   jmp    0x8048965 <main+578>
+   0x080488f8 <+469>:   lea    0x1b8(%esp),%eax
+   0x080488ff <+476>:   mov    %eax,%edx
+   0x08048901 <+478>:   mov    $0x8048d61,%eax
+   0x08048906 <+483>:   mov    $0x4,%ecx
+   0x0804890b <+488>:   mov    %edx,%esi
+
+   b*0x080488ea
+   r
+   x $eax
+=> 0xffffd544:     0x00000000
+
+```
 
 ### Calculate tab index to overwrite
 
-interval between eip and tab 0xffffd70c - ? = ?
+interval between eip and tab 0xffffd70c - 0xffffd544 = 0x9E8 = 456 / 4 = 114
+On divise par 4 car index d'int donc 4 bytes
 
-!!! Devise by 4
+problème : 114 est divisible par 3
+
+### 
+
 
 
 
