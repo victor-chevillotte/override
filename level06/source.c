@@ -1,17 +1,19 @@
-int auth(char *param_1,uint param_2)
+int auth(char *str,uint serialnbr)
 {
   size_t len;
   int res;
   long ptrace;
   int i;
-  uint target;
+  uint hash;
   
-  len = strcspn(param_1,"\n");
-  param_1[len] = '\0';
-  len = strnlen(param_1,0x20);
+  len = strcspn(str,"\n");
+  str[len] = '\0';
+
+
   if ((int)len < 6) {
     res = 1;
   }
+
   else {
     ptrace = ::ptrace(PTRACE_TRACEME);
     if (ptrace == -1) {
@@ -21,14 +23,14 @@ int auth(char *param_1,uint param_2)
       res = 1;
     }
     else {
-      target = ((int)param_1[3] ^ 0x1337U) + 0x5eeded;
-      for (i = 0; i < (int)len; i = i + 1) {
-        if (param_1[i] < ' ') {
+      hash = ((int)str[3] ^ 0x1337U) + 0x5eeded;
+      for ( int i = 0 ; i < strnlen(str, 32) ; i++ ) {
+        if (str[i] < ' ') {
           return 1;
         }
-        target = target + ((int)param_1[i] ^ target) % 0x539;
+        hash = hash + ((int)str[i] ^ hash) % 0x539;
       }
-      if (param_2 == target) {
+      if (serialnbr == hash) {
         res = 0;
       }
       else {
@@ -44,8 +46,8 @@ int main(int ac,char **av)
 {
   int res;
   int offset;
-  uint param2;
-  char buffer [32];
+  uint serialnbr;
+  char login [32];
   int i;
   
   i = *(int *)(offset + 0x14);
@@ -53,13 +55,13 @@ int main(int ac,char **av)
   puts("*\t\tlevel06\t\t  *");
   puts("***********************************");
   printf("-> Enter Login: ");
-  fgets(buffer,0x20,stdin);
+  fgets(login,0x20,stdin);
   puts("***********************************");
   puts("***** NEW ACCOUNT DETECTED ********");
   puts("***********************************");
   printf("-> Enter Serial: ");
   __isoc99_scanf();
-  res = auth(buffer,param2);
+  res = auth(login,serialnbr);
   if (res == 0) {
     puts("Authenticated!");
     system("/bin/sh");
@@ -70,3 +72,5 @@ int main(int ac,char **av)
   }
   return (uint)(res != 0);
 }
+
+
