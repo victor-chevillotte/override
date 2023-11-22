@@ -41,7 +41,7 @@ int store_number(int n)
     res = 1;
   }
   else {
-    *(uint *)(input_index * 4 + n) = input_nbr;
+    n[input_index * 4] = input_nbr;
     res = 0;
   }
   return res;
