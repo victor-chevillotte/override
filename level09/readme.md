@@ -12,7 +12,7 @@ level09: setuid setgid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), d
 
 ### step 2: Code Analysis
 
-find secret backdoor function address
-find eip of set_username and set_msg
-find address of ref
-find offset between ref and eip address
+- find secret backdoor function address : 
+- find eip of set_username and set_msg
+- find address of ref
+- find offset between ref and eip address
