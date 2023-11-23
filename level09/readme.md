@@ -64,7 +64,13 @@ set_msg
 ecrit de ref à ref + 180 ?
 
 
+- How to write more than 180 chars :
 
+```c
+strncpy(ref,(char *)buffer,(long)*(int *)(ref + 180));
+```
+
+The size of `strncpy` is calculated at the address `ref + 180` : We can input a tricky value with the char `\xff` that is evaluated as 255 -> The `strncpy` will copy up to 255 of our input and we will reach the 200 bytes offset of the `RIP`  
 
 
 
