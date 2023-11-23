@@ -95,8 +95,4 @@ problème : 114 est divisible par 3
 
 and then quit and we get a shell 
 
-
-
-
-
 https://stackoverflow.com/questions/19124095/return-to-lib-c-buffer-overflow-exercise-issue
