@@ -9,12 +9,12 @@ void secret_backdoor(void)
 
 void set_msg(char *msg)
 {
-  long lVar1;
+  long count;
   undefined8 *ptr;
   undefined8 buffer [128];
   
   ptr = buffer;
-  for (lVar1 = 0x80; lVar1 != 0; lVar1 = lVar1 + -1) {
+  for (count = 128; count != 0; count = count - 1) {
     *ptr = 0;
     ptr = ptr + 1;
   }
@@ -33,17 +33,17 @@ void set_username(long username)
   int i;
   
   ptr = buffer;
-  for (n = 0x10; n != 0; n = n + -1) {
+  for (n = 16; n != 0; n = n + -1) {
     *ptr = 0;
     ptr = ptr + 1;
   }
   puts(">: Enter your username");
   printf(">>: ");
   fgets((char *)buffer,128,_stdin);
-  for (i = 0; (i < 0x29 && (*(char *)((long)buffer + (long)i) != '\0')); i = i + 1) {
-    *(undefined *)(username + 0x8c + (long)i) = *(undefined *)((long)buffer + (long)i);
+  for (i = 0; (i < 41 && (*(char *)((long)buffer + (long)i) != '\0')); i = i + 1) {
+    *(undefined *)(username + 140 + (long)i) = *(undefined *)((long)buffer + (long)i);
   }
-  printf(">: Welcome, %s",(char *)(username + 0x8c));
+  printf(">: Welcome, %s",(char *)(username + 140));
   return;
 }
 
