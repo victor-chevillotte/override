@@ -53,6 +53,10 @@ Stack level 0, frame at 0x7fffffffe500:
 
 - find offset between ref and eip address
 
+set_username
+ecrit de ref + 140 à ref + 181
+set_msg
+ecrit de ref à ref + 180 ?
 dépasse sur message au 128 eme char dans username
 final string : 
 (python -c 'print("hhshs")' ; python -c 'print("hhshs")'; echo 'cat /home/users/end/.pass'; cat) | ./level09
