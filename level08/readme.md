@@ -28,3 +28,15 @@ dr-xr-x---+ 1 level08 level08 100 Oct 19  2016 ..
 -r--r-----+ 1 level09 users    41 Nov 22 18:06 .pass
 level08@OverRide:~$ cat backups/.pass
 7WJ6jFBzrcjEYXudxnM3kdW7n3qyxR6tk2xGrkSC
+
+
+```
+level08@OverRide:/tmp$ ls -la
+total 0
+drwxrwxrwt 4 root    root    120 Nov 23 08:49 .
+drwxr-xr-x 1 root    root    220 Nov 23 08:31 ..
+drwxrwxrwx 3 level08 level08 100 Nov 23 08:45 backups
+drwxrwxr-x 3 level08 level08  60 Nov 23 08:33 home
+lrwxrwxrwx 1 level08 level08  27 Nov 23 08:48 level08 -> /home/users/level08/level08
+lrwxrwxrwx 1 level08 level08  25 Nov 23 08:49 .pass -> /home/users/level09/.pass
+```
