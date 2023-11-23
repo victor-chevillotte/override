@@ -2,34 +2,34 @@ void secret_backdoor(void)
 {
   char buffer [128];
   
-  fgets(buffer,128,_stdin);
+  fgets(buffer,128,_stdin);// we must set /bin/sh or cat pass
   system(buffer);
   return;
 }
 
-void set_msg(char *msg)
+void set_msg(char *ref)
 {
   long count;
   undefined8 *ptr;
-  undefined8 buffer [128];
+  undefined8 buffer [128]; // 1024
   
   ptr = buffer;
-  for (count = 128; count != 0; count = count - 1) {
+  for (count = 128; count != 0; count = count - 1) {// init buffer with zeros
     *ptr = 0;
     ptr = ptr + 1;
   }
   puts(">: Msg @Unix-Dude");
   printf(">>: ");
   fgets((char *)buffer,1024,_stdin);
-  strncpy(msg,(char *)buffer,(long)*(int *)(msg + 180));
+  strncpy(ref,(char *)buffer,(long)*(int *)(ref + 180));
   return;
 }
 
-void set_username(long username)
+void set_username(long ref)
 {
   long n;
   undefined8 *ptr;
-  undefined8 buffer [17];
+  undefined8 buffer [17]; //136
   int i;
   
   ptr = buffer;
@@ -41,30 +41,17 @@ void set_username(long username)
   printf(">>: ");
   fgets((char *)buffer,128,_stdin);
   for (i = 0; (i < 41 && (*(char *)((long)buffer + (long)i) != '\0')); i = i + 1) {
-    *(undefined *)(username + 140 + (long)i) = *(undefined *)((long)buffer + (long)i);
+    *(undefined *)(ref + 140 + (long)i) = *(undefined *)((long)buffer + (long)i);
   }
-  printf(">: Welcome, %s",(char *)(username + 140));
+  printf(">: Welcome, %s",(char *)(ref + 140));
   return;
 }
 
 void handle_msg(void)
 {
-  char buffer [140];
-  undefined8 local_3c;
-  undefined8 local_34;
-  undefined8 local_2c;
-  undefined8 local_24;
-  undefined8 local_1c;
-  undefined4 local_14;
-  
-  local_3c = 0;
-  local_34 = 0;
-  local_2c = 0;
-  local_24 = 0;
-  local_1c = 0;
-  local_14 = 0x8c;
-  set_username((long)buffer);
-  set_msg(buffer);
+  char ref [140];
+  set_username((long)ref);
+  set_msg(ref);
   puts(">: Msg sent!");
   return;
 }
