@@ -63,6 +63,8 @@ Our shellcode address is : `0xffffdda4`
 - A shell is opened :
 
 ```
+whoami
+level02
 cat /home/users/level02/.pass
 PwBLgNa8p8MTKW57S7zxVAQCxnCpV8JqTTs9XEBv
 ```

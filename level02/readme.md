@@ -14,7 +14,7 @@ level02: setuid setgid ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dyna
   - `buffer1[12]`
   - `buffer2[14]`
 
-- A Username is asked a fill `buffer1`
+- A Username is asked to fill `buffer1`
 - If we try to overflow `buffer1` with more than 12 chars, `buffer2` gets filled. Here is an example with only one long input :  
 
 ```
@@ -55,11 +55,15 @@ level02@OverRide:~$ ./level02
 
 => We spot 5 chunks of 8 chars (16 hex) that could correspond to our 40 char long flag   
 
+### step 4: Process the flag into readable format
+
 - In order to get our flag we have to process this string :
   1) Split the 5 chunks with the separator `0x`
   2) Convert each chunk to little endian
   3) Convert each hex number to a char
   4) Join all converted chunks
+
+- Execute the Python script to get the processed string : `python3 script.py`  
 
 - flag : `Hh74RPnuQ9sa5JAEXgNWCqz7sXGnh5J5M9KfPg3H`
 
