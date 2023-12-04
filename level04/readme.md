@@ -9,16 +9,54 @@ We get the c source code of the program
 - We don't find any `system` function calls so we plan to use a shellcode
 - Finally we have a child process launched and it is in this process that the `gets` function is called
 
-important !!
-Since we have a parent and a child process we use the gdb command  `set follow-fork-mode child` to set gdb in `follow-child` mode
-
 ### step 3 : find the overflow 
 
+Important:  
+Since we have a parent and a child process we use the gdb command  `set follow-fork-mode child` to set gdb in `follow-child` mode  
+
+- We check that we can overflow the EIP in the child process by feeding a lot of `a` characters, then check the EIP value with the command `info frame` at a breakpoint just after the `gets` call => it is filled with 61616161 corresponding to our `a` char  
+
 ```
-( python -c 'print("A" * 156) ) | ./level04
+(gdb) r
+Starting program: /home/users/level04/level04 
+[New process 2171]
+Give me some shellcode, k
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+[Switching to process 2171]
+
+Breakpoint 1, 0x08048763 in main ()
+(gdb) info frame
+Stack level 0, frame at 0xffffd6f0:
+ eip = 0x8048763 in main; saved eip 0x61616161
+ Arglist at 0xffffd6e8, args: 
+ Locals at 0xffffd6e8, Previous frame's sp is 0xffffd6f0
+ Saved registers:
+  ebx at 0xffffd6e0, ebp at 0xffffd6e8, edi at 0xffffd6e4, eip at 0xffffd6ec
 ```
 
-We find that the overflow is at the 156 character
+- In order to find the precise Offset we will use a generated string provided by an online generator : https://projects.jason-rush.com/tools/buffer-overflow-eip-offset-string-generator/ 
+
+- Offset String : `Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag`
+
+```
+gdb level04
+set follow-fork-mode child
+b *0x08048763
+r
+Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9Ae0Ae1Ae2Ae3Ae4Ae5Ae6Ae7Ae8Ae9Af0Af1Af2Af3Af4Af5Af6Af7Af8Af9Ag0Ag1Ag2Ag3Ag4Ag5Ag
+info frame
+Stack level 0, frame at 0xffffd6f0:
+ eip = 0x8048763 in main; saved eip 0x41326641
+ Arglist at 0xffffd6e8, args: 
+ Locals at 0xffffd6e8, Previous frame's sp is 0xffffd6f0
+ Saved registers:
+  ebx at 0xffffd6e0, ebp at 0xffffd6e8, edi at 0xffffd6e4, eip at 0xffffd6ec
+```
+
+- We get the offset by providing our overwritten EIP `0x41326641` to the generator : 
+
+=> We find the Offset : `156` We find that the overflow is at the 156th character
+
 
 ### step 4 : setup the exploit
 

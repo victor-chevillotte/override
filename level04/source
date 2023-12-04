@@ -1,6 +1,6 @@
 int main(void)
 {
-  char s[32];
+  char buffer[32];
   int status;
   int ret_ptrace;
   pid_t pid;
@@ -10,7 +10,7 @@ int main(void)
     prctl(1, 1);
     ptrace(PTRACE_TRACEME, 0, 0, 0);
     puts("Give me some shellcode, k");
-    gets(s);
+    gets(buffer);
 
     return 0;
   }
