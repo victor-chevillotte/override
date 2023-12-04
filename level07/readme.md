@@ -1,3 +1,12 @@
+### step 1: Decompile with Ghidra
+
+We get the c source code of the program  
+
+### step 2: Code analysis
+
+
+
+
 index overflow
 pas d'utilisation possible de l'env car clear au début du code !!
 
