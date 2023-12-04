@@ -22,7 +22,7 @@ We launch it :
 gcc Ressources/hash.c && ./a.out
 ```
 
-And we get 6231562 as a result
+And we get `6231562` as a result
 
 ### step 4 : exploit :
 
