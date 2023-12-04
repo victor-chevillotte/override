@@ -5,7 +5,7 @@ int main(void)
   int ret_ptrace;
   pid_t pid;
 
-  if ((pid = fork()) == 0)
+  if ((pid = fork()) == 0)//child
   {
     prctl(1, 1);
     ptrace(PTRACE_TRACEME, 0, 0, 0);
@@ -14,7 +14,7 @@ int main(void)
 
     return 0;
   }
-  while (ret_ptrace != 11)
+  while (ret_ptrace != 11)//parent
   {
     wait(&status);
 
