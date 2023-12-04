@@ -7,14 +7,14 @@ level09@OverRide:~$ file level09
 level09: setuid setgid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.24, BuildID[sha1]=0xa1a3a49786f29814c5abd4fc6d7a685800a3d454, not stripped
 ```
 
-- Sources are available in `source.c`
+- Sources are available in `source`
 
 
 ### step 2: Code Analysis
 
 - the `main` function calls a `handle_msg`function
-- the `handle_msg`function has a buffer `ref [140]` that is passed to two functions `set_username` and `set_msg`
-- finally we have a `secret_backdoor` function which prompts for and input which is then given has an argument of a `system` call. We wan't to modifiy the rip (not eip because the binary is in 64-bits) of `handle_msg` function to point to the `secret_backdoor` function and then cat the .pass file with the call of the function `system`
+- the `handle_msg` function has a buffer `ref [140]` that is passed to two functions `set_username` and `set_msg`
+- finally we have a `secret_backdoor` function which prompts for and input which is then given has an argument of a `system` call. We want to modifiy the rip (not eip because the binary is in 64-bits) of `handle_msg` function to point to the `secret_backdoor` function and then cat the .pass file with the call of the function `system`
 
 ### step 3: Find the adresses
 
