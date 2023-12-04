@@ -8,11 +8,12 @@ We get the c source code of the program
 - The test function compares the input value and then calls a decrypt function 
 - test() calls decrypt: with the result if it's less than 21, else with a random number.
 - The function decrypt() then passes a crypt over the parameter.
-- If the initial user-inputted password is correct, decrypt() prints "Congratulations!" and calls system("/bin/sh").
+- If the initial user-inputed password is correct, decrypt() prints "Congratulations!" and calls system("/bin/sh").
 
 ### step 3: Test with one number
 
-To do a test with a number, it should be inputted into the executable, accompanied by a shell command. The command to be used is:
+Programatic approach :  
+To do a test with a number, it should be inputed into the executable, accompanied by a shell command. The command to be used is:
 
 ```
 ( echo 10 ; sleep .1 ; echo 'cat /home/users/level04/.pass' ) | ./level03
