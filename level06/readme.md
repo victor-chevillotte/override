@@ -28,6 +28,17 @@ And we get `6231562` as a result
 
 We launch the binary and set as first input login `aaaaaa` and `6231562` for the second input (serial number).
 
+```
+-> Enter Login: aaaaaa
+***********************************
+***** NEW ACCOUNT DETECTED ********
+***********************************
+-> Enter Serial: 6231562%
+Authenticated!
+$ whoami
+level07
+```
+
 It works ! We get a shell and we can cat the pass :
 
 ```
