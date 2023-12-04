@@ -12,7 +12,7 @@
 
 ### Step 3: Trying to Exploit
 
-- We want the flag the opened and read then written in the backups folder
+- We want the flag to be opened and read, then written in the backups folder
 
 - We can test that by opening the current flag present in level08's home and confirm that it works that way
 
