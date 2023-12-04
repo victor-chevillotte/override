@@ -9,7 +9,7 @@ This program appears to be a simple command-line interface for storing, reading,
 - The program defines functions for storing, reading, and managing numbers in an integer array.
 - It reads user commands (store, read, quit) and performs corresponding actions.
 - The main loop repeatedly prompts the user for commands, executes them, and provides feedback.
-- The program continues until the user decides to quit or an internal error occurs.
+- The program continue until the user decides to quit or an internal error occurs.
 - We cannot use the env for the exploit because it is cleared at the beginning of the `main` function
 - As a result we will try to find a `/bin/sh` occurence and overflow the number storage to gain our flag
 
